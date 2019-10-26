@@ -1,0 +1,30 @@
+{
+  "name": "googleanalyticsreportinghelper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DVo-MidwayUSA/GoogleAnalyticsReportingHelper.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DVo-MidwayUSA/GoogleAnalyticsReportingHelper/issues"
+  },
+  "homepage": "https://github.com/DVo-MidwayUSA/GoogleAnalyticsReportingHelper#readme",
+  "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/node": "^7.6.3",
+    "@babel/preset-env": "^7.6.3",
+    "googleapis": "^44.0.0"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  }
+}

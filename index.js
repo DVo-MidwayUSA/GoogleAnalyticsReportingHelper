@@ -5,9 +5,10 @@ import key from "./auth.json"
 import config from "./config.json"
 
 const SCOPES = "https://www.googleapis.com/auth/analytics.readonly"
+
 const DATE_RANGE = {
-  start: "10-21-2019",
-  end: "10-23-2019"
+  start: "7-21-2019",
+  end: "7-23-2019"
 }
 
 const jwt = new google.auth.JWT(key.client_id, null, key.private_key, SCOPES)
@@ -38,16 +39,17 @@ const getRanges = () => {
 
   let i = 0
   while (i < days) {
-    const startDaysAgo = Math.floor(
-      (new Date() - new Date(dateStart).addDays(i)) / BY_DAY
-    )
-    const endDaysAgo = Math.floor(
-      (new Date() - new Date(dateStart).addDays(i + 1)) / BY_DAY
-    )
+    const startDate = new Date(dateStart).addDays(i)
+    const endDate = new Date(dateStart).addDays(i + 1)
+
+    const startDaysAgo = Math.floor((new Date() - startDate) / BY_DAY)
+    const endDaysAgo = Math.floor((new Date() - endDate) / BY_DAY)
 
     ranges.push({
       start: `${startDaysAgo}daysAgo`,
-      end: `${endDaysAgo}daysAgo`
+      end: `${endDaysAgo}daysAgo`,
+      startDate,
+      endDate
     })
     i++
   }
@@ -55,8 +57,23 @@ const getRanges = () => {
   return ranges
 }
 
-getRanges().map(x => {
-  get(x.start, x.end).then(results => {
-    console.log(results)
-  })
+getRanges().map(async x => {
+  const result = await get(x.start, x.end)
+  const test = [
+    ...result.map(y => {
+      return {
+        start: x.startDate,
+        end: x.endDate,
+        column: y[0],
+        value: y[1]
+      }
+    })
+  ]
+
+  const test2 = [
+    ...test.filter(z => {
+      return z.column == "ADD_TO_CART"
+    })
+  ]
+  console.log(test2)
 })
